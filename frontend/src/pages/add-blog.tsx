@@ -8,8 +8,10 @@ import navigateBackWhiteIcon from '@/assets/svg/navigate-back-white.svg';
 import ModalComponent from '@/components/modal';
 import CategoryPill from '@/components/category-pill';
 import { categories } from '@/utils/category-colors';
+import 'react-quill/dist/quill.snow.css';
+import TextEditor from '@/components/text-editor';
 
-type FormData = {
+export type FormData = {
   title: string;
   authorName: string;
   imageLink: string;
@@ -17,6 +19,7 @@ type FormData = {
   description: string;
   isFeaturedPost: boolean;
 };
+
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
 
@@ -67,9 +70,11 @@ function AddBlog() {
     });
     setmodal(false);
   };
+
   const handleCheckboxChange = () => {
     setFormData({ ...formData, isFeaturedPost: !formData.isFeaturedPost });
   };
+
   const validateFormData = () => {
     if (
       !formData.title ||
@@ -81,11 +86,14 @@ function AddBlog() {
       toast.error('All fields must be filled out.');
       return false;
     }
+
     const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
+
     if (!imageLinkRegex.test(formData.imageLink)) {
       toast.error('Image URL must end with .jpg, .jpeg, .webp or .png');
       return false;
     }
+
     if (formData.categories.length > 3) {
       toast.error('Select up to three categories.');
       return false;
@@ -93,8 +101,10 @@ function AddBlog() {
 
     return true;
   };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (validateFormData()) {
       try {
         const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData);
@@ -110,8 +120,11 @@ function AddBlog() {
       }
     }
   };
+
   const navigate = useNavigate();
+
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
+
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
     setIsDarkMode(storedTheme === 'dark');
@@ -174,14 +187,7 @@ function AddBlog() {
             <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
               Blog content <Asterisk />
             </div>
-            <textarea
-              name="description"
-              placeholder="Start writing here&hellip;"
-              rows={5}
-              className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
-              value={formData.description}
-              onChange={handleInputChange}
-            />
+            <TextEditor formData={formData} setFormData={setFormData} />
           </div>
 
           <div className="mb-2">

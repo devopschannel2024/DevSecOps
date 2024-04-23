@@ -10,3 +10,33 @@
     transform: scale(0.95);
   }
 }
+
+/* React Quill Text Editor Styles */
+
+.ql-toolbar.ql-snow {
+  @apply flex flex-wrap items-center justify-center rounded-lg !border-none bg-slate-200 p-3 text-slate-50 dark:bg-dark-card;
+}
+
+.ql-editor {
+  @apply mt-2 min-h-[150px] cursor-text rounded-lg border-none bg-slate-200 text-base text-black focus:ring-1 focus:ring-light-secondary dark:bg-dark-card dark:text-slate-50 focus:dark:ring-dark-secondary;
+}
+
+.ql-blank::before {
+  @apply text-sm !not-italic text-light-tertiary dark:text-dark-tertiary;
+}
+
+.ql-container.ql-snow {
+  @apply border-none;
+}
+
+.ql-snow * {
+  @apply dark:stroke-slate-50;
+}
+
+.ql-picker-label {
+  @apply !text-black dark:!text-slate-50;
+}
+
+.ql-picker-options {
+  @apply !bg-slate-200 text-light-secondary dark:!bg-dark-card dark:text-slate-50;
+}
