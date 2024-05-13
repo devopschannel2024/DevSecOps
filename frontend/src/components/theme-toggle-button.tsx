@@ -7,21 +7,18 @@ function ThemeToggle() {
     setIsDarkTheme((prevTheme) => (prevTheme === null ? true : !prevTheme));
   };
   useLayoutEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
-    setIsDarkTheme(storedTheme === 'dark' || (!storedTheme && prefersDark) || null);
-    if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
-      document.documentElement.classList.add('dark');
-    }
+      const storedTheme = localStorage.getItem('theme') ?? '';
+      setIsDarkTheme(storedTheme === 'dark');   
   }, []);
+  
 
   useLayoutEffect(() => {
     if (isDarkTheme !== null) {
       document.documentElement.classList.toggle('dark', isDarkTheme);
-
       localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
     }
   }, [isDarkTheme]);
+
   return (
     <div>
       <button

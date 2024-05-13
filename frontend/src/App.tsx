@@ -9,8 +9,13 @@ import SignUp from '@/pages/signup-page';
 import AdminUsers from '@/pages/admin-users';
 import AdminBlogs from '@/pages/admin-blogs';
 import AdminContainer from './components/admin-container';
+import useThemeClass from './utils/theme-changer';
+import { useLayoutEffect } from 'react';
 
 function App() {
+  useLayoutEffect(() => {
+    useThemeClass();
+  }, []);
   return (
     <BrowserRouter>
       <ScrollToTop />
